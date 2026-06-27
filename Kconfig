@@ -1,0 +1,8 @@
+config ZMK_RGB_LAYER_INDICATOR
+    bool "Recolor RGB underglow to indicate the active layer"
+    depends on ZMK_RGB_UNDERGLOW
+    default n
+    help
+      When enabled, the RGB underglow is recolored on every layer change to a
+      per-layer color (layer 0 turns it off). Lights the central half; see
+      src/rgb_layer_indicator.c for the split-keyboard caveat.
