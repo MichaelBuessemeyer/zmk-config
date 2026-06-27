@@ -48,13 +48,19 @@ nav  = ['','⌘Z','⌘X','⌘C','⌘V','⌘A','','','⇞','↖','↑','↘','⇟
         '','','','','','','','⌫','⌦','','Ins','⌃↓',
         '','','','','','']
 fun  = ['','F1','F2','F3','F4','F5','','','F6','F7','F8','F9','F10','',
-        '','m:⌘','m:⌥','m:⌃','m:⇧','F11','','','ic:vol-','ic:vol+','ic:mute','ic:playpause','F12','',
+        '','m:⌘','m:⌥','m:⌃','m:⇧','F11','','','ic:vol-','ic:vol+','ic:mute','ic:playpause','F12','RGB',
         '','BT✗','BT1','BT2','BT3','BT4','ic:prev','ic:next','ic:bright-','ic:bright+','RST','BOOT',
-        '','','STUD','RGB','','']
+        '','','STUD','F12','','']
 
-THUMBS = {40:('⇧',COL['mod'],None,None), 41:('FN',COL['fun'],None,None),
-          42:('␣',COL['base'],'NAV',COL['nav']), 43:('⏎',COL['base'],'SYM',COL['sym']),
-          44:('⌫',COL['base'],'NUM',COL['num']), 45:('⌦',COL['base'],None,None)}
+# (main_glyph, main_color, hold_tag|None, hold_color|None, num_alt|None, fun_alt|None)
+# main = base tap (or, for FN/⇧, the base action); hold_tag = layer reached by holding;
+# num_alt = what this thumb does while the NUM layer is held; fun_alt = while FUN is held.
+THUMBS = {40:('FN',COL['fun'], None,None,        '0', None),
+          41:('⇧',COL['mod'], None,None,         '.', None),
+          42:('␣',COL['base'],'NAV',COL['nav'],  None,'STUD'),
+          43:('⏎',COL['base'],'SYM',COL['sym'],  None,'F12'),
+          44:('⌫',COL['base'],'NUM',COL['num'],  None,None),
+          45:('⌦',COL['base'], None,None,        None,None)}
 
 def esc(s): return s.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
 
@@ -96,11 +102,25 @@ def composite(p):
     return ''.join(out)
 
 def thumb(p):
-    g, gc, tag, tc = THUMBS[p]
-    inner = f'<span style="font-size:5.6mm;color:{gc};font-weight:500;line-height:1">{esc(g)}</span>'
+    g, gc, tag, tc, numalt, funalt = THUMBS[p]
+    out = ['<div class="ckey">']
+    # main base glyph, centered
+    out.append(f'<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);line-height:1">'
+               f'<span style="font-size:5.2mm;color:{gc};font-weight:500">{esc(g)}</span></div>')
+    # NUM-layer alternate (top-right, blue) — matches the main keys' TR=NUM convention
+    if numalt:
+        out.append(f'<div style="position:absolute;top:0.7mm;right:1.1mm;line-height:1">'
+                   f'<span style="font-size:3mm;color:{COL["num"]};font-weight:500">{esc(numalt)}</span></div>')
+    # FUN-layer alternate (bottom-right, violet) — matches BR=FUN
+    if funalt:
+        out.append(f'<div style="position:absolute;bottom:0.8mm;right:0.9mm;line-height:1">'
+                   f'<span style="font-size:1.9mm;color:{COL["fun"]};font-weight:500">{esc(funalt)}</span></div>')
+    # hold-layer tag (bottom-left, layer color) — "hold to reach this layer"
     if tag:
-        inner += f'<span style="font-size:2.4mm;color:{tc};font-weight:500;margin-top:0.6mm">{tag}</span>'
-    return f'<div class="ckey" style="display:flex;flex-direction:column;align-items:center;justify-content:center">{inner}</div>'
+        out.append(f'<div style="position:absolute;bottom:0.8mm;left:0.9mm;line-height:1">'
+                   f'<span style="font-size:2.1mm;color:{tc};font-weight:600">{esc(tag)}</span></div>')
+    out.append('</div>')
+    return ''.join(out)
 
 def render_half(half):
     main = ['<div class="half">']
@@ -173,6 +193,7 @@ h1 {{ font-size:5.5mm;margin:0 0 1.5mm;font-weight:600; }}
 .thumbs {{ margin-top:3.5mm; }}
 .ckey {{ width:13mm;height:13mm;border:0.2mm dashed #c4c4c4;border-radius:1.2mm;position:relative;background:#fff; }}
 .empty {{ width:13mm;height:13mm; }}
+.thumbnote {{ font-size:2.7mm;color:#444;margin:4mm 0 0;line-height:1.5;max-width:250mm; }}
 .modnote {{ font-size:3mm;color:#444;margin:5mm 0 2.2mm; }}
 .modstrip {{ display:flex;gap:3.5mm; }}
 .modcell {{ width:4mm;height:3mm;border:0.15mm dashed #c4c4c4;border-radius:0.6mm;display:flex;align-items:center;justify-content:center; }}
@@ -187,6 +208,9 @@ h1 {{ font-size:5.5mm;margin:0 0 1.5mm;font-weight:600; }}
     <div>{KEY}<div class="calib"><div class="cbox"></div><span>⟵ must measure exactly <b>10&nbsp;mm</b> when printed</span></div></div>
   </div>
   <div class="board">{render_half(0)}{render_half(1)}</div>
+  <div class="thumbnote">Thumbs: big glyph = tap · small bottom-left tag = layer reached by <b>holding</b> ·
+    top-right <span style="color:{COL['num']}">blue</span> = what it types on the NUM layer ·
+    bottom-right <span style="color:{COL['fun']}">violet</span> = its FUN-layer action (STUD = ZMK&nbsp;Studio unlock).</div>
   <div class="modnote">Home-row modifiers — print <b>smaller</b>, stick on the <b>front edge</b> of A&nbsp;S&nbsp;D&nbsp;F / J&nbsp;K&nbsp;L&nbsp;; :</div>
   <div class="modstrip">{STRIP}</div>
 </body></html>'''

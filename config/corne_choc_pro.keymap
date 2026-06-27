@@ -152,12 +152,12 @@
             // ESC  Q   W   E   R   T  DEL │ BSP  Y   U   I   O   P   ü
             // TAB  A⌘  S⌥  D⌃  F⇧  G  ⌘   │ ⌥    H   J⇧  K⌃  L⌥  ;⌘  ö
             // CAPW Z   X   C   V   B       │      N   M   ,   .   /   ä
-            //              ⇧   FUN SPC/NAV │ ENT/SYM BSP/NUM DEL
+            //              FUN ⇧   SPC/NAV │ ENT/SYM BSP/NUM DEL
             bindings = <
 &kp ESC    &kp GE_Q       &kp GE_W       &kp GE_E        &kp GE_R &kp GE_T  &kp DEL      &bs_del   &kp GE_Y &kp GE_U       &kp GE_I       &kp GE_O       &kp GE_P              &kp GE_UE
 &kp TAB    &hml LGUI GE_A &hml LALT GE_S &hml LCTRL GE_D &hml LSHFT GE_F &kp GE_G  &kp LGUI &kp RALT  &kp GE_H &hmr RSHFT GE_J &hmr RCTRL GE_K &hmr RALT GE_L &hmr RGUI GE_SEMICOLON &kp GE_OE
 &caps_word &kp GE_Z       &kp GE_X       &kp GE_C        &kp GE_V &kp GE_B                            &kp GE_N &kp GE_M       &kp GE_COMMA   &kp GE_DOT     &kp GE_FSLH           &kp GE_AE
-                                         &sk LSHFT       &mo FUN  &lt NAV SPACE               &lt SYM RET &lt NUM BSPC &kp DEL
+                                         &mo FUN         &sk LSHFT  &lt NAV SPACE             &lt SYM RET &lt NUM BSPC &kp DEL
             >;
         };
 
@@ -204,14 +204,14 @@
         fun_layer {
             display-name = "FUN";
             // ─   F1  F2  F3  F4  F5  ─ │ ─   F6   F7   F8   F9   F10  ─
-            // ─   ⌘   ⌥   ⌃   ⇧   F11 ─ │ ─   Vol- Vol+ Mute ⏯    F12  ─
+            // ─   ⌘   ⌥   ⌃   ⇧   F11 ─ │ ─   Vol- Vol+ Mute ⏯    F12  RGB
             // ─   BTc BT1 BT2 BT3 BT4   │     ⏮    ⏭    🔅   🔆   RST  BOOT
-            //              ─   ─   STUD │ RGB ─    ─
+            //              ─   ─   STUD │ F12 ─    ─
             bindings = <
 &trans &kp F1     &kp F2       &kp F3       &kp F4       &kp F5       &trans   &trans &kp F6      &kp F7      &kp F8      &kp F9      &kp F10    &trans
-&trans &kp LGUI   &kp LALT     &kp LCTRL    &kp LSHFT    &kp F11      &trans   &trans &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &kp C_PP   &kp F12    &trans
+&trans &kp LGUI   &kp LALT     &kp LCTRL    &kp LSHFT    &kp F11      &trans   &trans &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &kp C_PP   &kp F12    &rgb_ug RGB_TOG
 &trans &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3                  &kp C_PREV &kp C_NEXT  &kp C_BRI_DN &kp C_BRI_UP &sys_reset &bootloader
-                               &trans       &trans       &studio_unlock              &rgb_ug RGB_TOG &trans &trans
+                               &trans       &trans       &studio_unlock              &kp F12 &trans &trans
             >;
         };
     };
