@@ -121,18 +121,21 @@
             key-positions = <23 24>;        // J + K
             require-prior-idle-ms = <100>;
             bindings = <&de_fatarrow>;
+            layers = <DEF SYM>;             // not on NAV (J/K are arrows there)
         };
         combo_arrow {
             timeout-ms = <40>;
             key-positions = <24 25>;        // K + L
             require-prior-idle-ms = <100>;
             bindings = <&de_arrow>;
+            layers = <DEF SYM>;
         };
         combo_coloncolon {
             timeout-ms = <40>;
             key-positions = <25 26>;        // L + ;
             require-prior-idle-ms = <100>;
             bindings = <&de_coloncolon>;
+            layers = <DEF SYM>;
         };
         combo_boot {
             timeout-ms = <50>;
@@ -187,13 +190,13 @@
 
         nav_layer {
             display-name = "NAV";
-            // ─   ⌘Z  ⌘X  ⌘C  ⌘V  ⌘A  ─ │ ─  Home PgDn PgUp End  Ins  ⌃↑(MissionCtrl)
-            // ─   ⌘   ⌥   ⌃   ⇧   ─   ─ │ ─  ←    ↓    ↑    →    ─    ⌘⇥(AppSwitch)
-            // ─   ─   ─   ─   ─   ─     │    ─    ⌫    ⌦    ─    ─    ⌃↓(AppExpose)
+            // ─   ⌘Z  ⌘X  ⌘C  ⌘V  ⌘A  ─ │ ─  PgUp Home  ↑   End  PgDn ⌃↑(MissionCtrl)
+            // ─   ⌘   ⌥   ⌃   ⇧   ─   ─ │ ─  ─    ←     ↓   →    ─    ⌘⇥(AppSwitch)
+            // ─   ─   ─   ─   ─   ─     │    ─    ⌫     ⌦   ─    Ins  ⌃↓(AppExpose)
             bindings = <
-&trans &kp LG(GE_Z) &kp LG(GE_X) &kp LG(GE_C) &kp LG(GE_V) &kp LG(GE_A) &trans   &trans &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp INS &kp LC(UP)
-&trans &kp LGUI     &kp LALT     &kp LCTRL    &kp LSHFT    &trans       &trans   &trans &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &trans  &kp LG(TAB)
-&trans &trans       &trans       &trans       &trans       &trans                       &trans &kp BSPC  &kp DEL   &trans    &trans  &kp LC(DOWN)
+&trans &kp LG(GE_Z) &kp LG(GE_X) &kp LG(GE_C) &kp LG(GE_V) &kp LG(GE_A) &trans   &trans &kp PG_UP &kp HOME &kp UP   &kp END   &kp PG_DN &kp LC(UP)
+&trans &kp LGUI     &kp LALT     &kp LCTRL    &kp LSHFT    &trans       &trans   &trans &trans    &kp LEFT &kp DOWN &kp RIGHT &trans    &kp LG(TAB)
+&trans &trans       &trans       &trans       &trans       &trans                       &trans    &kp BSPC &kp DEL  &trans    &kp INS   &kp LC(DOWN)
                                  &trans       &trans       &trans                       &trans &trans &trans
             >;
         };
