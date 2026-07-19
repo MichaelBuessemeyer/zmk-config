@@ -43,9 +43,9 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
-            tapping-term-ms = <280>;
+            tapping-term-ms = <350>;
             quick-tap-ms = <175>;
-            require-prior-idle-ms = <150>;
+            require-prior-idle-ms = <200>;
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <KEYS_R THUMBS>;
             hold-trigger-on-release;
@@ -54,9 +54,9 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
-            tapping-term-ms = <280>;
+            tapping-term-ms = <350>;
             quick-tap-ms = <175>;
-            require-prior-idle-ms = <150>;
+            require-prior-idle-ms = <200>;
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <KEYS_L THUMBS>;
             hold-trigger-on-release;
@@ -220,4 +220,12 @@
 /* CapsWord stays active through these (e.g. SCREAMING_SNAKE_CASE on German). */
 &caps_word {
     continue-list = <UNDERSCORE MINUS BACKSPACE DELETE SLASH>;
+};
+
+/* Layer thumbs (&lt Space/Enter/Bksp): give the hold a generous window while
+ * learning, so a lingering tap doesn't flip layers. Dial back later.
+ * (Default &lt is tap-preferred / 200ms.) */
+&lt {
+    tapping-term-ms = <300>;
+    quick-tap-ms = <200>;
 };
